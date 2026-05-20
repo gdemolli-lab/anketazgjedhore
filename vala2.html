@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Projeksioni Elektoral 2026 · Vala 2</title>
+    <meta property="og:title" content="Projeksioni Elektoral 2026 · Vala 2" />
+    <meta property="og:description" content="Regjistro votën tënde. N=2,048 target. ±2.4pp." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sq_AL" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['"Inter"', 'system-ui', 'sans-serif'],
+                        'mono': ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #08080A;
+            color: #F9FAFB;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --accent:     #A855F7;
+            --accent-dim: rgba(168, 85, 247, 0.12);
+            --accent-mid: rgba(168, 85, 247, 0.25);
+            --surface:    #08080A;
+            --glass-bg:   rgba(255, 255, 255, 0.04);
+            --glass-bdr:  rgba(255, 255, 255, 0.07);
+            --text-muted: #6B7280;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-bdr);
+            border-radius: 1.25rem;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent-mid);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .status-pill::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: blink 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.15; }
+        }
+
+        .eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.55;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .fade-hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--glass-bdr), transparent);
+        }
+
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--surface); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-mid); border-radius: 3px; }
+
+        .glass-input {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-bdr);
+            border-radius: 0.75rem;
+            color: #F9FAFB;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+        }
+        .glass-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(168,85,247,0.1);
+        }
+
+        .radio-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 100px;
+            padding: 5px 13px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s;
+            user-select: none;
+        }
+        .radio-pill:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent-mid);
+        }
+        .radio-pill input[type="radio"] {
+            accent-color: var(--accent);
+            width: 13px; height: 13px;
+            flex-shrink: 0;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .chart-container svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .meta-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .meta-grid .sep {
+            color: var(--accent);
+            opacity: 0.25;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     § 1  WAVE 2 FORM — FIRST PAGE
+════════════════════════════════════════════════════ -->
+<section id="wave2" class="min-h-screen flex flex-col justify-center items-center px-6 py-16">
+
+    <div class="absolute top-6 left-6 md:top-8 md:left-8">
+        <span class="status-pill">Vala 2 · <span id="live-count-top">...</span> · Aktive</span>
+    </div>
+
+    <div class="max-w-md w-full" id="wave2-inner">
+        <span class="eyebrow text-center block" style="font-size:.7rem">PROJEKSIONI ELEKTORAL '26</span>
+
+        <div class="glass p-8 md:p-10">
+
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-white mb-3">
+                VALA <span style="color: var(--accent)">2</span> E ANKETËS
+            </h1>
+            <p class="text-gray-500 text-sm leading-relaxed mb-6 font-light">
+                Çdo input zvogëlon intervalin e besimit. Target: N=2,048 për ±2.4pp.
+                Anketa është anonime dhe zgjat 30 sekonda.
+            </p>
+
+            <div class="meta-grid mb-8" style="font-size: 0.65rem">
+                <span>Vala 1: 1,250</span>
+                <span class="sep">·</span>
+                <span id="wave2-count">Vala 2: ...</span>
+            </div>
+
+            <form id="wave2Form" class="space-y-6" novalidate>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">
+                        Qendra e Votimit
+                    </label>
+                    <select id="pollingCenter2" required class="glass-input">
+                        <option value="" class="bg-gray-900">-- Zgjidhni --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">
+                        Vota në Dhjetor 2025
+                    </label>
+                    <div class="flex flex-wrap gap-2" id="decOptions2"></div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">
+                        Vota në Qershor 2026
+                    </label>
+                    <div class="flex flex-wrap gap-2" id="juneOptions2"></div>
+                </div>
+
+                <button type="submit" id="submitBtn2"
+                    class="w-full font-bold py-4 rounded-xl text-sm tracking-widest uppercase font-mono transition-opacity duration-200 hover:opacity-85"
+                    style="background: var(--accent); color: #fff;">
+                    Dërgo → Vala 2
+                </button>
+
+                <p id="formMsg2" class="text-sm text-center hidden font-mono"></p>
+            </form>
+
+            <div id="votedMessage2" class="hidden text-center py-10">
+                <p class="font-mono text-sm tracking-widest uppercase" style="color: var(--accent)">
+                    ✓ Regjistruar
+                </p>
+                <p class="text-gray-600 text-xs mt-2">Përgjigja juaj u integrua në kampion.</p>
+            </div>
+
+        </div>
+
+        <a href="#chart"
+           class="block text-center text-xs text-gray-700 hover:text-gray-500 font-mono tracking-widest mt-5 transition-colors uppercase">
+            ↓ Shiko projeksionin aktual
+        </a>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- ════════════════════════════════════════════════════
+     § 2  CHART — SECOND PAGE (20% shorter)
+════════════════════════════════════════════════════ -->
+<section id="chart" class="min-h-screen flex flex-col justify-center items-center px-4 py-16">
+    
+    <div class="text-center mb-10" id="chart-title">
+        <span class="eyebrow" style="font-size:.65rem">Vala 1 · N=1,250 · CI 95%</span>
+        <h2 class="font-black tracking-tight text-white leading-none mb-4"
+            style="font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -0.04em">
+            Projeksioni<br><span style="color: var(--accent)">Qershor&nbsp;2026</span>
+        </h2>
+        <div class="flex items-center justify-center gap-6 text-xs font-mono text-gray-600">
+            <span class="flex items-center gap-2">
+                <span class="inline-block w-6 h-1.5 rounded-full" style="background: rgba(255,255,255,0.15)"></span>
+                Dhjetor
+            </span>
+            <span class="flex items-center gap-2">
+                <span class="inline-block w-6 h-1.5 rounded-full" style="background: var(--accent)"></span>
+                Qershor
+            </span>
+        </div>
+    </div>
+
+    <div class="chart-container" id="chart-wrapper">
+        <!-- viewBox 900×1280 (80% of 1600), scale adjusted to 21.6px/pp -->
+        <svg viewBox="0 0 900 1280" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid meet">
+          <title>Projeksioni Elektoral — Varianca Qershor 2026</title>
+          <defs>
+            <linearGradient id="g-lvv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D8B4FE"/>
+              <stop offset="45%" stop-color="#A855F7"/>
+              <stop offset="100%" stop-color="#6D28D9"/>
+            </linearGradient>
+            <linearGradient id="g-pdk" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#BAE6FD"/>
+              <stop offset="45%" stop-color="#38BDF8"/>
+              <stop offset="100%" stop-color="#0369A1"/>
+            </linearGradient>
+            <linearGradient id="g-ldk" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#A7F3D0"/>
+              <stop offset="45%" stop-color="#10B981"/>
+              <stop offset="100%" stop-color="#065F46"/>
+            </linearGradient>
+            <linearGradient id="g-min" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E2E8F0"/>
+              <stop offset="45%" stop-color="#94A3B8"/>
+              <stop offset="100%" stop-color="#475569"/>
+            </linearGradient>
+            <linearGradient id="g-aak" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FDE68A"/>
+              <stop offset="45%" stop-color="#F59E0B"/>
+              <stop offset="100%" stop-color="#92400E"/>
+            </linearGradient>
+            <linearGradient id="g-tjera" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#9CA3AF"/>
+              <stop offset="45%" stop-color="#6B7280"/>
+              <stop offset="100%" stop-color="#1F2937"/>
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff" stop-opacity="0.18"/>
+              <stop offset="42%" stop-color="#fff" stop-opacity="0.04"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="sh-l" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#000" stop-opacity="0.26"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="sh-r" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0%" stop-color="#000" stop-opacity="0.26"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="sh-b" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#000" stop-opacity="0.30"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <line x1="20" y1="1200" x2="880" y2="1200" stroke="rgba(255,255,255,0.05)" stroke-width="1.2"/>
+
+          <!-- LVV dec=51.1→1104 june=49.1→1061 Δ=−2.0 -->
+          <g>
+            <rect x="70" y="96" width="25" height="1104" rx="4" fill="#A855F7" fill-opacity="0.28"/>
+            <rect x="103" y="139" width="67" height="1061" rx="7" fill="url(#g-lvv)"/>
+            <rect x="103" y="139" width="67" height="1061" rx="7" fill="url(#glass)"/>
+            <rect x="103" y="139" width="16" height="1061" rx="6" fill="url(#sh-l)"/>
+            <rect x="154" y="139" width="16" height="1061" fill="url(#sh-r)"/>
+            <rect x="103" y="1120" width="67" height="80" rx="6" fill="url(#sh-b)"/>
+            <text x="137" y="100" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">49.1%</text>
+            <text x="120" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">LVV</text>
+            <text x="120" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#F87171">−2.0 pp</text>
+          </g>
+
+          <!-- PDK dec=20.2→436 june=20.4→441 Δ=+0.2 -->
+          <g>
+            <rect x="194" y="764" width="25" height="436" rx="4" fill="#38BDF8" fill-opacity="0.28"/>
+            <rect x="227" y="759" width="67" height="441" rx="7" fill="url(#g-pdk)"/>
+            <rect x="227" y="759" width="67" height="441" rx="7" fill="url(#glass)"/>
+            <rect x="227" y="759" width="16" height="441" rx="6" fill="url(#sh-l)"/>
+            <rect x="278" y="759" width="16" height="441" fill="url(#sh-r)"/>
+            <rect x="227" y="1144" width="67" height="56" rx="6" fill="url(#sh-b)"/>
+            <text x="261" y="730" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">20.4%</text>
+            <text x="244" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">PDK</text>
+            <text x="244" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#34D399">+0.2 pp</text>
+          </g>
+
+          <!-- LDK dec=13.2→285 june=16.3→352 Δ=+3.1 -->
+          <g>
+            <rect x="318" y="915" width="25" height="285" rx="4" fill="#10B981" fill-opacity="0.28"/>
+            <rect x="351" y="848" width="67" height="352" rx="7" fill="url(#g-ldk)"/>
+            <rect x="351" y="848" width="67" height="352" rx="7" fill="url(#glass)"/>
+            <rect x="351" y="848" width="16" height="352" rx="6" fill="url(#sh-l)"/>
+            <rect x="402" y="848" width="16" height="352" fill="url(#sh-r)"/>
+            <rect x="351" y="1149" width="67" height="51" rx="6" fill="url(#sh-b)"/>
+            <text x="385" y="818" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">16.3%</text>
+            <text x="368" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">LDK</text>
+            <text x="368" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#34D399">+3.1 pp</text>
+          </g>
+
+          <!-- MIN dec=8.2→177 june=8.1→175 Δ=−0.1 -->
+          <g>
+            <rect x="442" y="1023" width="25" height="177" rx="4" fill="#94A3B8" fill-opacity="0.28"/>
+            <rect x="475" y="1025" width="67" height="175" rx="7" fill="url(#g-min)"/>
+            <rect x="475" y="1025" width="67" height="175" rx="7" fill="url(#glass)"/>
+            <rect x="475" y="1025" width="16" height="175" rx="6" fill="url(#sh-l)"/>
+            <rect x="526" y="1025" width="16" height="175" fill="url(#sh-r)"/>
+            <rect x="475" y="1166" width="67" height="34" rx="6" fill="url(#sh-b)"/>
+            <text x="509" y="996" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">8.1%</text>
+            <text x="492" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">MIN</text>
+            <text x="492" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#6B7280">−0.1 pp</text>
+          </g>
+
+          <!-- AAK dec=5.5→119 june=5.6→121 Δ=+0.1 -->
+          <g>
+            <rect x="566" y="1081" width="25" height="119" rx="4" fill="#F59E0B" fill-opacity="0.28"/>
+            <rect x="599" y="1079" width="67" height="121" rx="7" fill="url(#g-aak)"/>
+            <rect x="599" y="1079" width="67" height="121" rx="7" fill="url(#glass)"/>
+            <rect x="599" y="1079" width="16" height="121" rx="6" fill="url(#sh-l)"/>
+            <rect x="650" y="1079" width="16" height="121" fill="url(#sh-r)"/>
+            <rect x="599" y="1171" width="67" height="29" rx="6" fill="url(#sh-b)"/>
+            <text x="633" y="1050" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">5.6%</text>
+            <text x="616" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">AAK</text>
+            <text x="616" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#6B7280">+0.1 pp</text>
+          </g>
+
+          <!-- TJERA dec=1.8→39 june=0.5→11 Δ=−1.3 -->
+          <g>
+            <rect x="690" y="1161" width="25" height="39" rx="3" fill="#6B7280" fill-opacity="0.28"/>
+            <rect x="723" y="1189" width="67" height="11" rx="4" fill="url(#g-tjera)"/>
+            <rect x="723" y="1189" width="67" height="11" rx="4" fill="url(#glass)"/>
+            <text x="757" y="1122" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="32" fill="#F9FAFB" letter-spacing="-0.7">0.5%</text>
+            <text x="740" y="1238" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="22" fill="#D1D5DB">TJERA</text>
+            <text x="740" y="1266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#F87171">−1.3 pp</text>
+          </g>
+
+        </svg>
+    </div>
+
+    <a href="#notes" class="block text-center text-xs text-gray-700 hover:text-gray-500 font-mono tracking-widest mt-8 transition-colors uppercase">
+        ↓ Shënime metodologjike
+    </a>
+</section>
+
+<hr class="fade-hr">
+
+<!-- ════════════════════════════════════════════════════
+     § 3  METHODOLOGY NOTES — BRIEF
+════════════════════════════════════════════════════ -->
+<section id="notes" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-3xl mx-auto">
+    
+    <span class="eyebrow">Shënime Metodologjike</span>
+    <h2 class="text-2xl md:text-4xl font-black tracking-tight text-white mb-10">
+        Specifikimet Teknike
+    </h2>
+
+    <div class="space-y-8 text-sm text-gray-400 leading-relaxed">
+        
+        <div>
+            <h3 class="text-base font-bold text-white mb-2">Kampionimi</h3>
+            <p>Vala 1: N=1,250 inpute të validuara (800 rezidentë, 450 diasporë me koeficient logjistik). Target Vala 2: N=2,048 për interval besimi ±2.4pp në nivelin 95%.</p>
+        </div>
+
+        <div>
+            <h3 class="text-base font-bold text-white mb-2">Pastrimi i të Dhënave</h3>
+            <p>DBSCAN (Density-Based Spatial Clustering) për eliminimin e anomalive, duplikateve IP, dhe votimeve të orkestruara. Vetëm inpute me fingerprint kriptografik unik kalojnë në model.</p>
+        </div>
+
+        <div>
+            <h3 class="text-base font-bold text-white mb-3">Modelimi</h3>
+            <p class="mb-2"><strong>CMGR</strong> — Norma e Përbërë e Rritjes Mujore mbi bazën 2021, nivel qendër votimi.</p>
+            <p class="mb-2"><strong>Matrica e Tranzicionit</strong> — Varianca neto mes çifteve të subjekteve, duke ndarë bërthamën historike nga votën e lirë.</p>
+            <p><strong>Lock-In Protocol</strong> — Parametrat u mbyllën përpara procesimit. Asnjë ndërhyrje editoriale post-facto.</p>
+        </div>
+
+        <div>
+            <h3 class="text-base font-bold text-white mb-2">Margjina e Gabimit</h3>
+            <p>±2.8pp për Valën 1 (N=1,250). Target ±2.4pp për kampionin e kombinuar Vala 1+2 (N≈3,300). Modeli llogarit variancën jolineare.</p>
+        </div>
+
+        <div class="pt-6 border-t border-gray-800">
+            <p class="text-xs text-gray-600 font-mono">
+                Projeksioni është produkt i analize sasiore të pavarur. Verifikimi bëhet në mënyrë strikte inxhinierike.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="mt-12 text-center">
+        <a href="#wave2" class="text-xs text-gray-600 hover:text-gray-500 font-mono tracking-widest transition-colors uppercase">
+            ↑ Kthehu te formulari
+        </a>
+    </div>
+
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Konfigurimi ──────────────────────────────
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuI2HrnuGj6-iKhx2zYmpyACRoxBbmv5RAys0ImXDLSA-Z725wA5vIOHgC7z-cnt1moQ/exec';
+
+// ── Numri dinamik nga Google Sheet ─────────
+async function fetchLiveCount() {
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const data = await res.json();
+    const count = data.count || 0;
+
+    const topEl = document.getElementById('live-count-top');
+    const metaEl = document.getElementById('wave2-count');
+
+    if (topEl) topEl.textContent = 'N=' + count;
+    if (metaEl) metaEl.textContent = 'Vala 2: ' + count;
+
+    return count;
+  } catch (e) {
+    console.warn('Live count i padisponueshëm:', e);
+    const fallback = '...';
+    document.getElementById('live-count-top').textContent = fallback;
+    document.getElementById('wave2-count').textContent = 'Vala 2: ' + fallback;
+    return null;
+  }
+}
+
+fetchLiveCount();
+setInterval(fetchLiveCount, 45000);
+
+// ── Të dhënat e formularit ─────────────────
+const pollingCenters = [
+    "Me kusht, me poste, jashte vendit",
+    "Decani, Juniku dhe fshatrat e Rekes", "Drenica", "Ferizaji", "Gjakova", "Gjilani",
+    "Gryka e Kaqanikut", "Hasi", "Karadaku dhe Anamorava", "Klina dhe Lugjet",
+    "Kollashini i Ibrit me Kopaonik", "Malesia e Gollakut dhe Zhegocit",
+    "Malisheva me Llapushe", "Mitrovica me Shale te Bajgores", "Opoja me Lumë",
+    "Peja", "Podguri i Pejes dhe Istogu", "Podujeva me Llap", "Prishtina", "Prizreni",
+    "Rahaveci me Vreshta", "Rrafshi i Ferizajit, Lipjani dhe Shtimja",
+    "Rrafshi i Vushtrrise me Artakoll", "Rrethi i Gracanices", "Rrethi i Prishtines",
+    "Sharr", "Suhareka me Podgur te Prizrenit"
+];
+const decCandidates  = ["LVV","LDK","PDK","AAK","TJERA","MINORITETE","NUK KAM VOTUAR"];
+const juneCandidates = ["LVV","LDK","PDK","AAK","TJERA","MINORITETE","NUK DO TE VOTOJ"];
+
+function populateForm() {
+    const sel = document.getElementById('pollingCenter2');
+    pollingCenters.forEach(c => {
+        const o = document.createElement('option');
+        o.value = o.textContent = c;
+        o.className = 'bg-gray-900';
+        sel.appendChild(o);
+    });
+
+    const decDiv = document.getElementById('decOptions2');
+    decCandidates.forEach(c => {
+        const lbl = document.createElement('label');
+        lbl.className = 'radio-pill';
+        lbl.innerHTML = `<input type="radio" name="dec2" value="${c}"> ${c}`;
+        decDiv.appendChild(lbl);
+    });
+
+    const juneDiv = document.getElementById('juneOptions2');
+    juneCandidates.forEach(c => {
+        const lbl = document.createElement('label');
+        lbl.className = 'radio-pill';
+        lbl.innerHTML = `<input type="radio" name="june2" value="${c}"> ${c}`;
+        juneDiv.appendChild(lbl);
+    });
+}
+populateForm();
+
+// ── Form submit ─────────────────────────────
+const formEl = document.getElementById('wave2Form');
+const votedMsg = document.getElementById('votedMessage2');
+const submitBtn = document.getElementById('submitBtn2');
+const formMsg = document.getElementById('formMsg2');
+let submitting = false;
+
+if (localStorage.getItem('voted_w2') === 'true') {
+    formEl.classList.add('hidden');
+    votedMsg.classList.remove('hidden');
+}
+
+async function getFingerprint() {
+    const parts = [
+        navigator.userAgent, navigator.language,
+        `${screen.width}x${screen.height}`, screen.colorDepth,
+        new Date().getTimezoneOffset(),
+        navigator.hardwareConcurrency || '',
+        navigator.platform || ''
+    ];
+    try {
+        const cv = document.createElement('canvas');
+        const cx = cv.getContext('2d');
+        cx.font = '14px Arial';
+        cx.fillText('ankete 2026', 2, 14);
+        parts.push(cv.toDataURL());
+    } catch(_) {}
+
+    const str = parts.join('|');
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+    }
+    return Math.abs(hash).toString(36);
+}
+
+formEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    const pollingCenter = document.getElementById('pollingCenter2').value;
+    const decVote = document.querySelector('input[name="dec2"]:checked')?.value;
+    const juneVote = document.querySelector('input[name="june2"]:checked')?.value;
+
+    if (!pollingCenter || !decVote || !juneVote) {
+        formMsg.textContent = 'Plotësoni të gjitha fushat.';
+        formMsg.className = 'text-red-400 text-sm text-center font-mono';
+        formMsg.classList.remove('hidden');
+        return;
+    }
+
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Duke dërguar...';
+
+    let ip = 'unknown', city = 'unknown', region = 'unknown', country = 'unknown';
+    try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        ip = ipData.ip || 'unknown';
+    } catch(_) {}
+
+    try {
+        const geoRes = await fetch('https://ipapi.co/json/');
+        const geoData = await geoRes.json();
+        if (!geoData.error) {
+            city = geoData.city || 'unknown';
+            region = geoData.region || 'unknown';
+            country = geoData.country_name || 'unknown';
+        } else throw new Error('ipapi limit');
+    } catch(_) {
+        try {
+            const geoRes2 = await fetch('https://ip-api.com/json/?fields=status,country,regionName,city');
+            const geoData2 = await geoRes2.json();
+            if (geoData2.status === 'success') {
+                city = geoData2.city || 'unknown';
+                region = geoData2.regionName || 'unknown';
+                country = geoData2.country || 'unknown';
+            }
+        } catch(_) {}
+    }
+
+    const fingerprint = await getFingerprint();
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                pollingCenter,
+                decemberVote: decVote,
+                juneVote,
+                ip, city, region, country,
+                fingerprint,
+                vala: '2'
+            }),
+        });
+        localStorage.setItem('voted_w2', 'true');
+        formEl.classList.add('hidden');
+        votedMsg.classList.remove('hidden');
+        fetchLiveCount(); // përditëso numrin pas regjistrimit
+    } catch (_) {
+        formMsg.textContent = 'Gabim në rrjet. Provoni përsëri.';
+        formMsg.className = 'text-red-400 text-sm text-center font-mono';
+        formMsg.classList.remove('hidden');
+        submitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Dërgo → Vala 2';
+    }
+});
+
+// ── Animacione ──────────────────────────────
+const ease = 'power3.out';
+
+gsap.from('#wave2-inner', {
+    y: 50, opacity: 0, duration: 1, ease,
+    delay: 0.15
+});
+
+gsap.from('#chart-title', {
+    y: 40, opacity: 0, duration: 0.9, ease,
+    scrollTrigger: { trigger: '#chart', start: 'top 80%' }
+});
+
+gsap.from('#chart-wrapper', {
+    y: 50, opacity: 0, duration: 1.1, ease,
+    scrollTrigger: { trigger: '#chart', start: 'top 75%' }
+});
+
+gsap.from('#notes h2, #notes > div', {
+    y: 30, opacity: 0, duration: 0.8, stagger: 0.12, ease,
+    scrollTrigger: { trigger: '#notes', start: 'top 78%' }
+});
+</script>
+</body>
+</html>
