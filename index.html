@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Projeksioni Elektoral 2026 · Vala 1</title>
-    <meta name="description" content="Projeksion elektoral i bazuar në modelim kuantitativ, me N=1250 dhe CI 95%. Rezultatet e Valës 1 për zgjedhjet qendrore 2026." />
-    <meta property="og:title" content="Projeksioni Elektoral 2026 · Vala 1" />
-    <meta property="og:description" content="Modelim kuantitativ i trupit elektoral kosovar. N=1,250. Intervali i besimit 95%. ±2.8pp." />
+    <title>Projeksioni Elektoral 2026 · Anketa</title>
+    <meta name="description" content="Plotëso anketën dhe shiko projeksionin e modeluar kuantitativisht. N=1250, CI 95%, ±2.8pp." />
+    <meta property="og:title" content="Projeksioni Elektoral 2026 · Anketa" />
+    <meta property="og:description" content="Modelim kuantitativ i trupit elektoral kosovar. Anketë e shpejtë + rezultate." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="sq_AL" />
-    <!-- Përditëso URL-në e imazhit me adresën tënde aktuale (Vercel) -->
     <meta property="og:image" content="https://anketazgjedhore2026.vercel.app/vala1.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://anketazgjedhore2026.vercel.app/vala1.png" />
@@ -20,7 +19,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'AW-11038591033');
     </script>
     <!-- Event snippet for Page vue conversion page -->
@@ -243,7 +241,61 @@
 </head>
 <body>
 
-<!-- § 1  HERO -->
+<!-- ══════════════════════════════════════════════
+     SEKSIONI I PARË: ANKETA (VALA 2)
+══════════════════════════════════════════════ -->
+<section id="wave2" class="min-h-screen flex flex-col justify-center items-center px-6 py-24">
+    <div class="max-w-md w-full" id="wave2-inner">
+        <span class="eyebrow text-center block" style="font-size:.7rem">Slajdi VII · Zgjerimi i Kampionit</span>
+        <div class="glass p-8 md:p-10">
+            <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-2">
+                Anketa e <span style="color: var(--accent)">Shpejtë</span>
+            </h2>
+            <p class="text-gray-500 text-sm leading-relaxed mb-8 font-light">
+                Çdo përgjigje ndihmon në ngushtimin e intervalit të besimit. Anketa është anonime dhe zgjat më pak se 1 minutë.
+            </p>
+
+            <form id="wave2Form" class="space-y-6" novalidate>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Qendra e Votimit</label>
+                    <select id="pollingCenter2" required class="glass-input">
+                        <option value="" class="bg-gray-900">-- Zgjidhni --</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Për kë votuat në Dhjetor 2025?</label>
+                    <div class="flex flex-wrap gap-2" id="decOptions2"></div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Për kë do të votoni në Qershor 2026?</label>
+                    <div class="flex flex-wrap gap-2" id="juneOptions2"></div>
+                </div>
+                <button type="submit" id="submitBtn2"
+                    class="w-full font-bold py-4 rounded-xl text-sm tracking-widest uppercase font-mono transition-opacity duration-200 hover:opacity-85"
+                    style="background: var(--accent); color: #fff;">
+                    Dërgo Përgjigjen
+                </button>
+                <p id="formMsg2" class="text-sm text-center hidden font-mono"></p>
+            </form>
+
+            <div id="votedMessage2" class="hidden text-center py-10">
+                <p class="font-mono text-sm tracking-widest uppercase" style="color: var(--accent)">✓ Përgjigja u regjistrua</p>
+                <p class="text-gray-600 text-xs mt-2">Faleminderit! Tani mund të shihni projeksionin e plotë më poshtë.</p>
+            </div>
+        </div>
+
+        <a href="#results-title"
+           class="block text-center text-xs text-gray-700 hover:text-gray-500 font-mono tracking-widest mt-5 transition-colors uppercase">
+            → Kalo direkt te projeksioni
+        </a>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- ══════════════════════════════════════════════
+     SEKSIONI 2: HERO (prezantimi)
+══════════════════════════════════════════════ -->
 <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center px-6 relative">
     <div class="absolute top-6 left-6 md:top-8 md:left-8">
         <span class="status-pill">Vala 1 · Procesuar</span>
@@ -277,7 +329,7 @@
 
 <hr class="fade-hr">
 
-<!-- § 2  KAMPIONIMI N = 1,250 -->
+<!-- § 3  KAMPIONIMI N = 1,250 -->
 <section id="sample" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
     <div class="mb-14">
         <span class="eyebrow">Slajdi II · Specifikimet e Kampionit</span>
@@ -319,7 +371,7 @@
 
 <hr class="fade-hr">
 
-<!-- § 3  DBSCAN -->
+<!-- § 4  DBSCAN -->
 <section id="cleansing" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
     <div class="mb-14">
         <span class="eyebrow">Slajdi III · Trajtimi Hapësinor</span>
@@ -354,7 +406,7 @@
 
 <hr class="fade-hr">
 
-<!-- § 4  METODOLOGJIA -->
+<!-- § 5  METODOLOGJIA -->
 <section id="methodology" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
     <div class="mb-14">
         <span class="eyebrow">Slajdi IV–VI · Arkitektura Metodologjike</span>
@@ -395,7 +447,7 @@
 
 <hr class="fade-hr">
 
-<!-- § 5  INTEGRITETI -->
+<!-- § 6  INTEGRITETI -->
 <section id="integrity" class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-24">
     <div class="max-w-2xl" id="integrity-inner">
         <span class="eyebrow" style="font-size:.7rem">Garanci Metodologjike</span>
@@ -407,53 +459,6 @@
            style="font-size: clamp(0.9rem, 2vw, 1.05rem)">
             Ky projeksion është produkt i një analize sasiore të pastër. Parametrat janë fiksuar përpara mbledhjes së të dhënave dhe asnjë ndërhyrje e jashtme nuk ka ndikuar në rezultate. Verifikimi bëhet në mënyrë strikte inxhinierike — nuk ka ndërhyrje editoriale pas faktit.
         </p>
-    </div>
-</section>
-
-<hr class="fade-hr">
-
-<!-- § 6  WAVE 2 — FORMULARI -->
-<section id="wave2" class="min-h-screen flex flex-col justify-center items-center px-6 py-24">
-    <div class="max-w-md w-full" id="wave2-inner">
-        <span class="eyebrow text-center block" style="font-size:.7rem">Slajdi VII · Zgjerimi i Kampionit</span>
-        <div class="glass p-8 md:p-10">
-            <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-2">
-                Vala <span style="color: var(--accent)">2</span>
-            </h2>
-            <p class="text-gray-500 text-sm leading-relaxed mb-8 font-light">
-                Intervali i besimit është intervali brenda të cilit gjendet vlera e kërkuar me probabilitet të fiksueshëm. Amplituda e tij varet drejtpërdrejt nga madhësia e kampionit — çdo input ngushtë intervalin.
-            </p>
-            <form id="wave2Form" class="space-y-6" novalidate>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Qendra e Votimit</label>
-                    <select id="pollingCenter2" required class="glass-input">
-                        <option value="" class="bg-gray-900">-- Zgjidhni --</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Vota në Dhjetor 2025</label>
-                    <div class="flex flex-wrap gap-2" id="decOptions2"></div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Vota në Qershor 2026</label>
-                    <div class="flex flex-wrap gap-2" id="juneOptions2"></div>
-                </div>
-                <button type="submit" id="submitBtn2"
-                    class="w-full font-bold py-4 rounded-xl text-sm tracking-widest uppercase font-mono transition-opacity duration-200 hover:opacity-85"
-                    style="background: var(--accent); color: #fff;">
-                    Dërgo → Vala 2
-                </button>
-                <p id="formMsg2" class="text-sm text-center hidden font-mono"></p>
-            </form>
-            <div id="votedMessage2" class="hidden text-center py-10">
-                <p class="font-mono text-sm tracking-widest uppercase" style="color: var(--accent)">✓ Regjistruar</p>
-                <p class="text-gray-600 text-xs mt-2">Përgjigja juaj u integrua në kampion.</p>
-            </div>
-        </div>
-        <a href="#results-title"
-           class="block text-center text-xs text-gray-700 hover:text-gray-500 font-mono tracking-widest mt-5 transition-colors uppercase">
-            → Kalo direkt te projeksioni
-        </a>
     </div>
 </section>
 
@@ -872,6 +877,7 @@ ScrollTrigger.create({
 });
 
 const ease = 'power3.out';
+gsap.from('#wave2-inner', { y: 50, opacity: 0, duration: 1, ease, delay: 0.2 });
 gsap.from('#hero-inner', { y: 55, opacity: 0, duration: 1.3, ease, delay: 0.1 });
 gsap.from('#sample .glass, #sample .glass-sm', {
     y: 36, opacity: 0, duration: 0.85, stagger: 0.09, ease,
@@ -888,10 +894,6 @@ gsap.from('#methodology .glass', {
 gsap.from('#integrity-inner', {
     y: 44, opacity: 0, duration: 1, ease,
     scrollTrigger: { trigger: '#integrity', start: 'top 72%' }
-});
-gsap.from('#wave2-inner', {
-    y: 50, opacity: 0, duration: 1, ease,
-    scrollTrigger: { trigger: '#wave2', start: 'top 78%' }
 });
 gsap.from('#results-inner', {
     y: 40, opacity: 0, duration: 0.95, ease,
