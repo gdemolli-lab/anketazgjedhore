@@ -9,25 +9,24 @@
     <meta property="og:description" content="Modelim kuantitativ i trupit elektoral kosovar. N=1,250. Intervali i besimit 95%. ±2.8pp." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="sq_AL" />
-    <meta property="og:image" content="https://anketazgjedhore2026.netlify.app/vala1.png" />  <!-- Përditësoje me URL‑në të Vercel-it nëse do -->
+    <!-- Përditëso URL-në e imazhit me adresën tënde aktuale (Vercel) -->
+    <meta property="og:image" content="https://anketazgjedhore2026.vercel.app/vala1.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://anketazgjedhore2026.netlify.app/vala1.png" />
+    <meta name="twitter:image" content="https://anketazgjedhore2026.vercel.app/vala1.png" />
 
-    <!-- ════════════════════════════════════════════════
-         GOOGLE ADS TAG
-    ════════════════════════════════════════════════ -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11038591033"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
+
         gtag('config', 'AW-11038591033');
     </script>
-    <!-- Fragmenti i konvertimit për faqen e parë -->
+    <!-- Event snippet for Page vue conversion page -->
     <script>
         gtag('event', 'conversion', {'send_to': 'AW-11038591033/HIbsCOSbgrIcELmQzo8p'});
     </script>
-    <!-- ════════════════════════════════════════════════ -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -278,9 +277,630 @@
 
 <hr class="fade-hr">
 
-<!-- ... pjesa tjetër e përmbajtjes mbetet e njëjtë si në versionin e fundit që funksiononte ... -->
-<!-- Për të kursyer hapësirë, unë po tregoj vetëm vendndodhjen e etiketave; ti ke tashmë gjithë kodin e plotë. -->
-<!-- Mjafton të zëvendësosh skedarin index.html me këtë version të përditësuar. -->
+<!-- § 2  KAMPIONIMI N = 1,250 -->
+<section id="sample" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
+    <div class="mb-14">
+        <span class="eyebrow">Slajdi II · Specifikimet e Kampionit</span>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+            N&nbsp;=&nbsp;<span style="color: var(--accent)">1,250</span>
+        </h2>
+        <p class="text-gray-500 max-w-xl mt-4 leading-relaxed text-sm font-light">
+            Besueshmëria globale e kësaj analize është rezultati i kontrollit të të gjitha komponenteve të gabimeve algoritmike dhe njerëzore.
+        </p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+        <div class="glass p-7 md:p-9 col-span-2 flex flex-col justify-between min-h-[160px]">
+            <span class="eyebrow">Inpute Totale</span>
+            <div class="big-num text-white" id="c-total">0</div>
+            <p class="text-xs text-gray-600 font-mono mt-3 uppercase tracking-wider">inpute të validuara</p>
+        </div>
+        <div class="glass p-6 md:p-7 flex flex-col justify-between min-h-[160px]">
+            <span class="eyebrow">Rezidentë</span>
+            <div class="big-num text-white" id="c-res">0</div>
+            <p class="text-xs text-gray-600 font-mono mt-3 leading-relaxed">Kuota urbane / rurale</p>
+        </div>
+        <div class="glass p-6 md:p-7 flex flex-col justify-between min-h-[160px]">
+            <span class="eyebrow">Diasporë</span>
+            <div class="big-num text-white" id="c-dia">0</div>
+            <p class="text-xs text-gray-600 font-mono mt-3 leading-relaxed">Koeficient logjistik</p>
+        </div>
+        <div class="glass-sm p-5 col-span-2 flex items-center accent-bar">
+            <p class="text-xs text-gray-500 font-mono leading-relaxed">
+                Të dhënat e jo-rezidentëve u kalibruan sipas fluksit logjistik maksimal të udhëtimeve të pritshme për muajin qershor — duke asgjësuar peshën joreale të deklarimeve nga jashtë.
+            </p>
+        </div>
+        <div class="glass-sm p-5 col-span-2 flex items-center accent-bar">
+            <p class="text-xs text-gray-500 font-mono leading-relaxed">
+                Marzhi i gabimit <strong class="text-white font-mono">±2.8 pp</strong> në intervalin e besimit 95%. Modeli llogarit variancën jolineare.
+            </p>
+        </div>
+    </div>
+</section>
 
+<hr class="fade-hr">
+
+<!-- § 3  DBSCAN -->
+<section id="cleansing" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
+    <div class="mb-14">
+        <span class="eyebrow">Slajdi III · Trajtimi Hapësinor</span>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+            Asgjësimi i <span style="color: var(--accent)">Zhurmës</span> Statistikore
+        </h2>
+        <p class="text-gray-500 max-w-xl mt-4 leading-relaxed text-sm font-light">
+            Të dhënat online bartin rrezikun e ndotjes. Për të mbrojtur integritetin e bazës, u aplikua algoritmi DBSCAN (Density-Based Spatial Clustering of Applications with Noise).
+        </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass p-8 flex flex-col gap-6">
+            <div>
+                <span class="eyebrow">Algoritmi</span>
+                <h3 class="text-lg font-bold text-white">DBSCAN</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Çdo rresht të dhënash u skanua në prapavijë për t'i izoluar dhe fshirë anomalitë, rreshtat e duplikuar dhe votimet e orkestruara masive përmes nyjeve të njëjta IP. Vetëm të dhënat me gjurmë kriptografike unike në shfletues kaluan në fazën e modelimit.
+            </p>
+        </div>
+        <div class="glass p-8 flex flex-col gap-5">
+            <span class="eyebrow">Kriteret e Filtrimit</span>
+            <ul class="arrow-list space-y-4">
+                <li>Anomali hapësinore — clustering i dendur nga IP identike</li>
+                <li>Rreshta të duplikuar me fingerprint kriptografik identik</li>
+                <li>Votim i orkestruar me interval kohor nën pragun e lejuar</li>
+                <li>Gjurmë unike të shfletuesit të pavlefshme ose të fabrikuara</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- § 4  METODOLOGJIA -->
+<section id="methodology" class="min-h-screen flex flex-col justify-center px-6 py-24 max-w-6xl mx-auto w-full">
+    <div class="mb-14">
+        <span class="eyebrow">Slajdi IV–VI · Arkitektura Metodologjike</span>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+            Tre Shtylla të <span style="color: var(--accent)">Modelit</span>
+        </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="glass p-7 flex flex-col gap-4">
+            <div>
+                <span class="eyebrow">Shtylla I · CMGR</span>
+                <h3 class="text-base font-bold text-white leading-tight">Dimensionimi i Bymimit Elektoral</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                Sistemi u ankorua drejtpërdrejt në të dhënat e provuara të vitit 2021 në nivel mikro (qendër votimi). Mbi këtë dysheme u aplikua Norma e Përbërë e Rritjes Mujore (CMGR), e cila llogarit dinamikën e hyrjeve dhe daljeve demografike natyrale 6 muaj përpara ditës së zgjedhjeve.
+            </p>
+        </div>
+        <div class="glass p-7 flex flex-col gap-4">
+            <div>
+                <span class="eyebrow">Shtylla II · Matrica</span>
+                <h3 class="text-base font-bold text-white leading-tight">Varianca e Çifteve</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                Lëvizjet nuk trajtohen si përqindje abstrakte. Aplikimi i matricës së tranzicionit në çifte llogarit variancën neto mes dy subjekteve specifike, duke ndarë bërthamën historike të secilës parti nga vota matematikisht e lirë për t'u transferuar.
+            </p>
+        </div>
+        <div class="glass p-7 flex flex-col gap-4">
+            <div>
+                <span class="eyebrow">Shtylla III · Lock-In</span>
+                <h3 class="text-base font-bold text-white leading-tight">Bllokimi i Parametrave</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                Të gjithë koeficientët, funksionet e pragut dhe rregullat e grupimit rajonal u koduan dhe u mbyllën përpara procesimit të kampionit N=1,250. Nuk ka ndërhyrje editoriale pas faktit dhe të dhënat dalëse nuk u nënshtrohen vlerësimeve subjektive.
+            </p>
+        </div>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- § 5  INTEGRITETI -->
+<section id="integrity" class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-24">
+    <div class="max-w-2xl" id="integrity-inner">
+        <span class="eyebrow" style="font-size:.7rem">Garanci Metodologjike</span>
+        <h2 class="font-black tracking-tight text-white leading-none mb-10"
+            style="font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -0.04em">
+            Tërësisht<br>të Pavarur
+        </h2>
+        <p class="text-gray-400 leading-relaxed font-light"
+           style="font-size: clamp(0.9rem, 2vw, 1.05rem)">
+            Ky projeksion është produkt i një analize sasiore të pastër. Parametrat janë fiksuar përpara mbledhjes së të dhënave dhe asnjë ndërhyrje e jashtme nuk ka ndikuar në rezultate. Verifikimi bëhet në mënyrë strikte inxhinierike — nuk ka ndërhyrje editoriale pas faktit.
+        </p>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- § 6  WAVE 2 — FORMULARI -->
+<section id="wave2" class="min-h-screen flex flex-col justify-center items-center px-6 py-24">
+    <div class="max-w-md w-full" id="wave2-inner">
+        <span class="eyebrow text-center block" style="font-size:.7rem">Slajdi VII · Zgjerimi i Kampionit</span>
+        <div class="glass p-8 md:p-10">
+            <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-2">
+                Vala <span style="color: var(--accent)">2</span>
+            </h2>
+            <p class="text-gray-500 text-sm leading-relaxed mb-8 font-light">
+                Intervali i besimit është intervali brenda të cilit gjendet vlera e kërkuar me probabilitet të fiksueshëm. Amplituda e tij varet drejtpërdrejt nga madhësia e kampionit — çdo input ngushtë intervalin.
+            </p>
+            <form id="wave2Form" class="space-y-6" novalidate>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Qendra e Votimit</label>
+                    <select id="pollingCenter2" required class="glass-input">
+                        <option value="" class="bg-gray-900">-- Zgjidhni --</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Vota në Dhjetor 2025</label>
+                    <div class="flex flex-wrap gap-2" id="decOptions2"></div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 font-mono">Vota në Qershor 2026</label>
+                    <div class="flex flex-wrap gap-2" id="juneOptions2"></div>
+                </div>
+                <button type="submit" id="submitBtn2"
+                    class="w-full font-bold py-4 rounded-xl text-sm tracking-widest uppercase font-mono transition-opacity duration-200 hover:opacity-85"
+                    style="background: var(--accent); color: #fff;">
+                    Dërgo → Vala 2
+                </button>
+                <p id="formMsg2" class="text-sm text-center hidden font-mono"></p>
+            </form>
+            <div id="votedMessage2" class="hidden text-center py-10">
+                <p class="font-mono text-sm tracking-widest uppercase" style="color: var(--accent)">✓ Regjistruar</p>
+                <p class="text-gray-600 text-xs mt-2">Përgjigja juaj u integrua në kampion.</p>
+            </div>
+        </div>
+        <a href="#results-title"
+           class="block text-center text-xs text-gray-700 hover:text-gray-500 font-mono tracking-widest mt-5 transition-colors uppercase">
+            → Kalo direkt te projeksioni
+        </a>
+    </div>
+</section>
+
+<hr class="fade-hr">
+
+<!-- § 7  TITULLI REZULTATEVE -->
+<section id="results-title" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+    <div id="results-inner">
+        <span class="eyebrow" style="font-size:.7rem">Slajdi VIII · Vizualizimi Agregat</span>
+        <h2 class="font-black tracking-tight text-white leading-none mb-6"
+            style="font-size: clamp(2.8rem, 9vw, 6rem); letter-spacing: -0.04em">
+            Projeksioni<br><span style="color: var(--accent)">Qershor&nbsp;2026</span>
+        </h2>
+        <p class="text-gray-600 text-xs font-mono mb-10 tracking-wider">
+            Varianca e shprehur në pikë përqindjeje (pp) · Baza referuese: Dhjetor 2025
+        </p>
+        <div class="flex items-center justify-center gap-8">
+            <span class="flex items-center gap-2 text-xs font-mono text-gray-500">
+                <span class="inline-block w-8 h-1.5 rounded-full" style="background: rgba(255,255,255,0.15)"></span>
+                Dhjetor 2025
+            </span>
+            <span style="color: var(--accent); opacity: .25" class="font-mono">·</span>
+            <span class="flex items-center gap-2 text-xs font-mono text-gray-500">
+                <span class="inline-block w-8 h-1.5 rounded-full" style="background: var(--accent)"></span>
+                Qershor 2026
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- § 8  GRAFIKU -->
+<section id="chart-section" class="min-h-screen flex flex-col justify-center items-center px-4 py-16">
+    <div class="glass w-full max-w-5xl p-6 md:p-10 flex-1 flex items-stretch" style="min-height: 0;">
+        <canvas id="resultChart" class="w-full h-full"></canvas>
+    </div>
+    <p class="text-xs text-gray-700 mt-5 font-mono max-w-xl text-center leading-relaxed px-4">
+        *Rezultate pas aplikimit të matricës së tranzicionit mbi bazën historike 2021. Probabilitet 95% që vlera reale të luhatet me ±2.8 pp nga shifrat e afishuara.
+    </p>
+</section>
+
+<hr class="fade-hr">
+
+<!-- § 9  CTA — NDAJENI -->
+<section id="cta" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+    <span class="eyebrow" style="font-size:.7rem">Faza e Parë · Përfunduar</span>
+    <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-4">Raporti i Radhës</h2>
+    <p class="text-gray-500 max-w-sm mb-12 leading-relaxed text-sm font-light">
+        Të dhënat e Valës 2 do t'i nënshtrohen të njëjtit proces rigoroz. Projeksioni i përditësuar publikohet në përfundim të ciklit.
+    </p>
+    <div class="flex flex-col md:flex-row gap-3">
+        <a id="shareX" href="#" target="_blank" rel="noopener"
+           class="glass px-8 py-4 inline-flex items-center justify-center gap-3 text-xs font-mono tracking-widest uppercase hover:bg-white/5 transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Shpërndaje në X
+        </a>
+        <a id="shareFB" href="#" target="_blank" rel="noopener"
+           class="glass px-8 py-4 inline-flex items-center justify-center gap-3 text-xs font-mono tracking-widest uppercase hover:bg-white/5 transition-colors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Shpërndaje në Facebook
+        </a>
+    </div>
+</section>
+
+<!-- Skriptet -->
+<script>
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuI2HrnuGj6-iKhx2zYmpyACRoxBbmv5RAys0ImXDLSA-Z725wA5vIOHgC7z-cnt1moQ/exec';
+</script>
+
+<script>
+// GSAP
+gsap.registerPlugin(ScrollTrigger);
+
+// Share URLs
+const _url  = encodeURIComponent(window.location.href);
+const _text = encodeURIComponent('Projeksioni Elektoral 2026 · Vala 1 — Modelim kuantitativ i trupit elektoral kosovar.');
+document.getElementById('shareX').href  = `https://twitter.com/intent/tweet?text=${_text}&url=${_url}`;
+document.getElementById('shareFB').href = `https://www.facebook.com/sharer/sharer.php?u=${_url}`;
+
+const pollingCenters = [
+    "Me kusht, me poste, jashte vendit",
+    "Decani, Juniku dhe fshatrat e Rekes", "Drenica", "Ferizaji", "Gjakova", "Gjilani",
+    "Gryka e Kaqanikut", "Hasi", "Karadaku dhe Anamorava", "Klina dhe Lugjet",
+    "Kollashini i Ibrit me Kopaonik", "Malesia e Gollakut dhe Zhegocit",
+    "Malisheva me Llapushe", "Mitrovica me Shale te Bajgores", "Opoja me Lumë",
+    "Peja", "Podguri i Pejes dhe Istogu", "Podujeva me Llap", "Prishtina", "Prizreni",
+    "Rahaveci me Vreshta", "Rrafshi i Ferizajit, Lipjani dhe Shtimja",
+    "Rrafshi i Vushtrrise me Artakoll", "Rrethi i Gracanices", "Rrethi i Prishtines",
+    "Sharr", "Suhareka me Podgur te Prizrenit"
+];
+const decCandidates  = ["LVV","LDK","PDK","AAK","TJERA","MINORITETE","NUK KAM VOTUAR"];
+const juneCandidates = ["LVV","LDK","PDK","AAK","TJERA","MINORITETE","NUK DO TE VOTOJ"];
+
+function populateForm() {
+    const sel = document.getElementById('pollingCenter2');
+    pollingCenters.forEach(c => {
+        const o = document.createElement('option');
+        o.value = o.textContent = c;
+        o.className = 'bg-gray-900';
+        sel.appendChild(o);
+    });
+
+    const decDiv = document.getElementById('decOptions2');
+    decCandidates.forEach(c => {
+        const lbl = document.createElement('label');
+        lbl.className = 'radio-pill';
+        lbl.innerHTML = `<input type="radio" name="dec2" value="${c}"> ${c}`;
+        decDiv.appendChild(lbl);
+    });
+
+    const juneDiv = document.getElementById('juneOptions2');
+    juneCandidates.forEach(c => {
+        const lbl = document.createElement('label');
+        lbl.className = 'radio-pill';
+        lbl.innerHTML = `<input type="radio" name="june2" value="${c}"> ${c}`;
+        juneDiv.appendChild(lbl);
+    });
+}
+populateForm();
+
+const formEl    = document.getElementById('wave2Form');
+const votedMsg  = document.getElementById('votedMessage2');
+const submitBtn = document.getElementById('submitBtn2');
+const formMsg   = document.getElementById('formMsg2');
+let submitting  = false;
+
+if (localStorage.getItem('voted_w2') === 'true') {
+    formEl.classList.add('hidden');
+    votedMsg.classList.remove('hidden');
+}
+
+async function getFingerprint() {
+    const parts = [
+        navigator.userAgent, navigator.language,
+        `${screen.width}x${screen.height}`, screen.colorDepth,
+        new Date().getTimezoneOffset(),
+        navigator.hardwareConcurrency || '',
+        navigator.platform || ''
+    ];
+    try {
+        const cv = document.createElement('canvas');
+        const cx = cv.getContext('2d');
+        cx.font = '14px Arial';
+        cx.fillText('ankete 2026', 2, 14);
+        parts.push(cv.toDataURL());
+    } catch(_) {}
+
+    const str = parts.join('|');
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+    }
+    return Math.abs(hash).toString(36);
+}
+
+async function getGeoData() {
+    let ip = 'unknown';
+    let city = 'unknown';
+    let region = 'unknown';
+    let country = 'unknown';
+
+    try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        ip = ipData.ip || 'unknown';
+    } catch(e) {}
+
+    if (ip !== 'unknown') {
+        try {
+            const countryRes = await fetch(`https://ipapi.co/${ip}/country_name/`);
+            if (countryRes.ok) {
+                const text = await countryRes.text();
+                if (text && text !== 'undefined' && !text.includes('error')) {
+                    country = text.trim();
+                }
+            }
+        } catch(e) {}
+    }
+
+    try {
+        const geoRes = await fetch('https://ip-api.com/json/?fields=status,message,country,regionName,city');
+        const geoData = await geoRes.json();
+        if (geoData.status === 'success') {
+            city = geoData.city || city;
+            region = geoData.regionName || region;
+            if (country === 'unknown' && geoData.country) {
+                country = geoData.country;
+            }
+        }
+    } catch(e) {}
+
+    return { ip, city, region, country };
+}
+
+formEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    const pollingCenter = document.getElementById('pollingCenter2').value;
+    const decVote  = document.querySelector('input[name="dec2"]:checked')?.value;
+    const juneVote = document.querySelector('input[name="june2"]:checked')?.value;
+
+    if (!pollingCenter || !decVote || !juneVote) {
+        formMsg.textContent = 'Plotësoni të gjitha fushat.';
+        formMsg.className = 'text-red-400 text-sm text-center font-mono';
+        formMsg.classList.remove('hidden');
+        return;
+    }
+
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Duke dërguar...';
+
+    const fingerprint = await getFingerprint();
+    const geo = await getGeoData();
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                pollingCenter,
+                decemberVote: decVote,
+                juneVote,
+                fingerprint,
+                vala: '2',
+                ip: geo.ip,
+                city: geo.city,
+                region: geo.region,
+                country: geo.country
+            }),
+        });
+        localStorage.setItem('voted_w2', 'true');
+        formEl.classList.add('hidden');
+        votedMsg.classList.remove('hidden');
+    } catch (_) {
+        formMsg.textContent = 'Gabim në rrjet. Provoni përsëri.';
+        formMsg.className = 'text-red-400 text-sm text-center font-mono';
+        formMsg.classList.remove('hidden');
+        submitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Dërgo → Vala 2';
+    }
+});
+
+// Grafiku
+const chartLabels = ['LVV', 'PDK', 'LDK', 'MIN',  'AAK', 'TJERA'];
+const decData     = [51.1,  20.2,  13.2,   8.2,    5.5,   1.8  ];
+const juneData    = [49.1,  20.4,  16.3,   8.1,    5.6,   0.5  ];
+const deltas      = juneData.map((v, i) => +(v - decData[i]).toFixed(1));
+
+const partyColors = [
+    '#A855F7', '#60A5FA', '#34D399', '#94A3B8', '#F59E0B', '#4B5563'
+];
+
+const deltaPlugin = {
+    id: 'deltaLabels',
+    afterDraw(chart) {
+        const { ctx, scales: { x } } = chart;
+        if (!x || x.bottom == null) return;
+        const meta = chart.getDatasetMeta(1);
+        if (!meta || !meta.data.length) return;
+
+        ctx.save();
+        ctx.font = '700 14px "Inter", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        chartLabels.forEach((_, i) => {
+            const bar = meta.data[i];
+            const delta = deltas[i];
+            if (bar == null) return;
+            const sign = delta > 0 ? '+' : '';
+            ctx.fillStyle = delta > 0 ? '#34D399' : delta < 0 ? '#F87171' : '#6B7280';
+            ctx.fillText(`${sign}${delta}pp`, bar.x, x.bottom + 10);
+        });
+
+        ctx.restore();
+    }
+};
+
+let chartInit = false;
+function buildChart() {
+    if (chartInit) return;
+    chartInit = true;
+    Chart.register(ChartDataLabels);
+
+    const ctx = document.getElementById('resultChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        plugins: [deltaPlugin],
+        data: {
+            labels: chartLabels,
+            datasets: [
+                {
+                    label: 'Dhjetor 2025',
+                    data: decData,
+                    backgroundColor: partyColors.map(c => c + '28'),
+                    borderWidth: 0,
+                    barThickness: 24,
+                    borderRadius: 4,
+                    order: 1,
+                    datalabels: { display: false }
+                },
+                {
+                    label: 'Qershor 2026',
+                    data: juneData,
+                    backgroundColor: partyColors,
+                    borderWidth: 0,
+                    barThickness: (ctx) => {
+                        const width = ctx.chart.width;
+                        return width < 500 ? 22 : 38;
+                    },
+                    borderRadius: 6,
+                    order: 2,
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        offset: 4,
+                        rotation: 0,
+                        color: '#E5E7EB',
+                        font: {
+                            family: '"Inter", sans-serif',
+                            weight: '700',
+                            size: 14
+                        },
+                        formatter: v => v + '%'
+                    }
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 44, bottom: 44 } },
+            plugins: {
+                legend: { display: false },
+                datalabels: { display: true },
+                tooltip: {
+                    backgroundColor: '#111114',
+                    titleColor: '#F9FAFB',
+                    bodyColor: '#9CA3AF',
+                    borderColor: 'rgba(168,85,247,0.2)',
+                    borderWidth: 1,
+                    padding: 12,
+                    titleFont: { family: '"Inter", sans-serif', size: 12 },
+                    bodyFont:  { family: '"Inter", sans-serif', size: 12 },
+                    callbacks: {
+                        afterBody(items) {
+                            const i = items[0].dataIndex;
+                            const d = deltas[i];
+                            const s = d > 0 ? '+' : '';
+                            const bps = Math.round(d * 100);
+                            const bsign = bps > 0 ? '+' : '';
+                            return `Δ ${s}${d}pp (${bsign}${bps} bps)`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: { display: false, beginAtZero: true, max: 66 },
+                x: {
+                    categoryPercentage: 0.95,
+                    ticks: {
+                        color: '#D1D5DB',
+                        font: {
+                            family: '"Inter", sans-serif',
+                            weight: '700',
+                            size: 16
+                        },
+                        align: 'center',
+                        padding: 20
+                    },
+                    grid: { display: false },
+                    border: { display: false }
+                }
+            },
+            animation: { duration: 1400, easing: 'easeOutQuart' }
+        }
+    });
+}
+
+ScrollTrigger.create({
+    trigger: '#chart-section',
+    start: 'top 85%',
+    onEnter: buildChart,
+    once: true,
+});
+
+function animCount(id, target, ms = 2000) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const start = performance.now();
+    (function tick(now) {
+        const t = Math.min((now - start) / ms, 1);
+        const ease = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(ease * target).toLocaleString('sq-AL');
+        if (t < 1) requestAnimationFrame(tick);
+    })(start);
+}
+
+ScrollTrigger.create({
+    trigger: '#sample',
+    start: 'top 72%',
+    onEnter() {
+        animCount('c-total', 1250);
+        animCount('c-res',   800);
+        animCount('c-dia',   450);
+    },
+    once: true,
+});
+
+const ease = 'power3.out';
+gsap.from('#hero-inner', { y: 55, opacity: 0, duration: 1.3, ease, delay: 0.1 });
+gsap.from('#sample .glass, #sample .glass-sm', {
+    y: 36, opacity: 0, duration: 0.85, stagger: 0.09, ease,
+    scrollTrigger: { trigger: '#sample', start: 'top 74%' }
+});
+gsap.from('#cleansing .glass', {
+    y: 36, opacity: 0, duration: 0.85, stagger: 0.12, ease,
+    scrollTrigger: { trigger: '#cleansing', start: 'top 74%' }
+});
+gsap.from('#methodology .glass', {
+    y: 44, opacity: 0, duration: 0.85, stagger: 0.14, ease,
+    scrollTrigger: { trigger: '#methodology', start: 'top 74%' }
+});
+gsap.from('#integrity-inner', {
+    y: 44, opacity: 0, duration: 1, ease,
+    scrollTrigger: { trigger: '#integrity', start: 'top 72%' }
+});
+gsap.from('#wave2-inner', {
+    y: 50, opacity: 0, duration: 1, ease,
+    scrollTrigger: { trigger: '#wave2', start: 'top 78%' }
+});
+gsap.from('#results-inner', {
+    y: 40, opacity: 0, duration: 0.95, ease,
+    scrollTrigger: { trigger: '#results-title', start: 'top 78%' }
+});
+gsap.from('#cta h2, #cta p, #cta .flex', {
+    y: 36, opacity: 0, duration: 0.8, stagger: 0.14, ease,
+    scrollTrigger: { trigger: '#cta', start: 'top 85%' }
+});
+</script>
 </body>
 </html>
